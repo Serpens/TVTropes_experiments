@@ -31,8 +31,11 @@ if __name__ == '__main__':
     # get trope->media and media-> trope links
     with open(dbtropes_path) as f:
         has_feature_line = get_hasfeature_from_file(f)
-    links = [(clean_url(i[0]), rstrip_int(clean_url(i[2]))) for i in [i.split(' ') for i in has_feature_line]]     # i[1] is always HAS_FEATURE_PATTERN, i[2] is always '.\n'
-    interesting_links = [i for i in links if (i[0].startswith('Main/') and not i[1].startswith('Main/')) or (not i[0].startswith('Main/') and i[1].startswith('Main/'))]
+    links = [(clean_url(i[0]), rstrip_int(clean_url(i[2]))) \
+        for i in [i.split(' ') for i in has_feature_line]]     # i[1] is always HAS_FEATURE_PATTERN, i[2] is always '.\n'
+    interesting_links = [i for i in links if \
+        (i[0].startswith('Main/') and not i[1].startswith('Main/')) or \
+        (not i[0].startswith('Main/') and i[1].startswith('Main/'))]
     node_names = set([i[0] for i in interesting_links] + [i[1] for i in interesting_links])
     # create graph
     G = nx.Graph()
