@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os, sys
 import networkx as nx
+from collections import defaultdict
 
 
 HAS_FEATURE_PATTERN = '<http://skipforward.net/skipforward/resource/seeder/skipinions/hasFeature>'
@@ -25,6 +26,10 @@ def rstrip_int(str_with_int):
     return str_with_int
 
 
+def jaccard_index(set1, set2):
+    return len(set1.intersection(set2)) / len(set1.union(set2))
+
+
 if __name__ == '__main__':
     dbtropes_path = sys.argv[1]
     graph_path = sys.argv[2]
@@ -42,3 +47,23 @@ if __name__ == '__main__':
     G.add_nodes_from(node_names)
     G.add_edges_from(interesting_links)
     nx.write_gml(G, graph_path)
+    # create trope and media graphs
+    trope_names = [i for i in node_names if i.startswith('Main/')]
+    media_names = [i for i in node_names if not i.startswith('Main/')]
+
+
+for t in trope_names:
+    media_for_trope[t] = set([m for m in media_names if G.has_edge(t, m)])
+
+for m in media_names:
+    tropes_for_media[t] = set([t for t in trope_names if G.has_edge(t, m)])
+
+
+    G_tropes.add_nodes_from(trope_names)
+
+    for i in enumerate(trope_names):
+        for j in enumerate(trope_names):
+            if i[0] > j[0]:
+                weight = jaccard_index(media_for_trope[i[1]], media_for_trope[j[1]])
+                if weight > 0.0:
+                    G_tropes.add_edge(i[1], j[1], weight=weight)
