@@ -1,0 +1,8 @@
+all_media.gml filter=lfs diff=lfs merge=lfs -text
+film.gml filter=lfs diff=lfs merge=lfs -text
+film_jaccard.gml filter=lfs diff=lfs merge=lfs -text
+media_netqork.gml filter=lfs diff=lfs merge=lfs -text
+media_network.gml filter=lfs diff=lfs merge=lfs -text
+tropes-20160701.gml filter=lfs diff=lfs merge=lfs -text
+tropes.gml filter=lfs diff=lfs merge=lfs -text
+film_0.01.gml filter=lfs diff=lfs merge=lfs -text
