@@ -1,0 +1,58 @@
+import pandas, numpy, os, sys
+import numpy as np
+import networkx as nx
+import pickle
+%matplotlib
+f = open('film_tropes_for_media_ordered.pickle', 'rb')
+import collections
+f.close()
+f = open('film_tropes_for_media_ordered.pickle', 'rb')
+film_j_index = np.zeros(shape=(len(film_tropes_for_media), len(film_tropes_for_media)), dtype=np.float64)
+film_tropes_for_media = pickle.load(f)
+f.close()
+for t1 in enumerate(film_tropes_for_media.values()): 
+    for t2 in enumerate(film_tropes_for_media.values()):
+        if t1[0] > t2[0]:
+            j_index = jaccard_index(t1[1], t2[1])
+            film_j_index[t1[0], t2[0]] = film_j_index[t2[0], t1[0]] = j_index
+def jaccard_index(set1, set2):
+        return len(set1.intersection(set2)) / len(set1.union(set2))
+for t1 in enumerate(film_tropes_for_media.values()): 
+    for t2 in enumerate(film_tropes_for_media.values()):
+        if t1[0] > t2[0]:
+            j_index = jaccard_index(t1[1], t2[1])
+            film_j_index[t1[0], t2[0]] = film_j_index[t2[0], t1[0]] = j_index
+film_j_index = np.zeros(shape=(len(film_tropes_for_media), len(film_tropes_for_media)), dtype=np.float64)
+%hist
+for t1 in enumerate(film_tropes_for_media.values()): 
+    for t2 in enumerate(film_tropes_for_media.values()):
+        if t1[0] > t2[0]:
+            j_index = jaccard_index(t1[1], t2[1])
+            film_j_index[t1[0], t2[0]] = film_j_index[t2[0], t1[0]] = j_index
+import pylab
+%hist
+%hist spam.txt
+%save spam.txt
+%save
+%save spam
+%history spam.txt
+%history -f spam.txt
+def mapping(x):
+    try:
+        return list(film_tropes_for_media.keys())[int(x)]
+    except:
+        return x
+df = pandas.DataFrame(film_j_index)
+df.plot()
+np.reshape(film_j_index, 1)
+film_j_index
+film_j_index.shape()
+film_j_index.shape
+np.reshape(film_j_index, (1, 6297 ** 2))
+j_values =np.reshape(film_j_index, (1, 6297 ** 2))
+pylab.hist(j_values)
+j_values.mean
+import gc
+gc.collect()
+gc.collect()
+%history -f spam2.txt

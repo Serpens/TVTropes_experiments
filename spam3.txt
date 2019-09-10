@@ -1,0 +1,84 @@
+import pandas, numpy, os, sys
+import numpy as np
+import networkx as nx
+import pickle
+%matplotlib
+f = open('film_tropes_for_media_ordered.pickle', 'rb')
+film_j_index = np.zeros(shape=(len(film_tropes_for_media), len(film_tropes_for_media)), dtype=np.float64)
+film_tropes_for_media = pickle.load(f)
+f.close()
+for t1 in enumerate(film_tropes_for_media.values()): 
+        for t2 in enumerate(film_tropes_for_media.values()):
+                if t1[0] > t2[0]:
+                        j_index = jaccard_index(t1[1], t2[1])
+                        film_j_index[t1[0], t2[0]] = film_j_index[t2[0], t1[0]] = j_index
+def jaccard_index(set1, set2):
+        return len(set1.intersection(set2)) / len(set1.union(set2))
+%paste
+%paste
+film_j_index = np.zeros(shape=(len(film_tropes_for_media), len(film_tropes_for_media)), dtype=np.float64)
+%paste
+j_values = np.reshape(film_j_index, (1, 6297 ** 2))
+j_values.mean()
+np.percentile(j_values)
+np.percentile(j_values, 50)
+np.percentile(j_values, 70)
+np.percentile(j_values, 99)
+np.percentile(j_values, 1)
+np.percentile(j_values, 98)
+[1 for i in j_values if i > np.percentile(j_values, 99)]
+6297 ** 2
+np.percentile(j_values, 90)
+np.percentile(j_values, 91)
+np.percentile(j_values, 95)
+np.percentile(j_values, 99)
+np.percentile(j_values, 98)
+np.percentile(j_values, 97)
+j_values.max
+j_values.max()
+j_values.min()
+list(j_values)
+j_values.tolist
+j_values.tolist()[:10]
+j_values.tolist()[0][:10]
+j_values = j_values.tolist()[0]
+len(j_values)
+not_zero_j_values = [i for i in j_values if i>0]
+len(not_zero_j_values)
+pylab.hist(not_zero_j_values)
+import pylab
+%pylab
+pylab.hist(not_zero_j_values)
+pylab.hist(not_zero_j_values, bins=2125120)
+pylab.hist(not_zero_j_values, bins=2000)
+pylab.hist(not_zero_j_values, bins=200)
+G = nx.Graph()
+G.add_nodes_from(film_tropes_for_media.keys())
+film_tropes_for_media.keys()[:10]
+list(film_tropes_for_media.keys())[:10]
+for t1 in enumerate(film_tropes_for_media.values()):
+    for t2 in enumerate(film_tropes_for_media.values()):
+        if t1[0] > t2[0]:
+            if film_j_index[t1[0], t2[0]] > 0.01:
+                G.add_edge(t1[1], t2[1])
+titles = film_tropes_for_media.keys()
+for t1 in enumerate(film_tropes_for_media.values()):
+    for t2 in enumerate(film_tropes_for_media.values()):
+        if t1[0] > t2[0]:
+            if film_j_index[t1[0], t2[0]] > 0.01:
+                G.add_edge(titles[t1[0]], titles[t2[0]])
+titles = list(film_tropes_for_media.keys())
+def mapping(x):
+    try:
+        return list(film_tropes_for_media.keys())[int(x)]
+    except:
+        return x
+for t1 in enumerate(film_tropes_for_media.values()):
+    for t2 in enumerate(film_tropes_for_media.values()):
+        if t1[0] > t2[0]:
+            if film_j_index[t1[0], t2[0]] > 0.01:
+                G.add_edge(titles[t1[0]], titles[t2[0]])
+len(G.edges())
+nx.write_edgelist(G, 'film_0.01.el')
+nx.write_gml(G, 'film_0.01.gml')
+%history -f spam3.txt
